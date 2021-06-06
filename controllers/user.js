@@ -44,7 +44,7 @@ const login = async (req, res, next) => {
     const payload = { id, subscription };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
     await User.updateToket(id, token);
-    res.status().json(
+    res.status(HttpCode.OK).json(
       createResponse(Status.SUCCESS, HttpCode.OK, {
         data: { id, token, subscription },
       })

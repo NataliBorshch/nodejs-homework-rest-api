@@ -2,8 +2,8 @@ const Joi = require("joi");
 const { Sub } = require("../../../helpers/constants");
 
 const schemaCreateUser = Joi.object({
-  name: Joi.string().min(2).max(40).required(),
-  lastName: Joi.string().min(2).max(40).required(),
+  name: Joi.string().min(2).max(40).optional(),
+  lastName: Joi.string().min(2).max(40).optional(),
   email: Joi.string()
     .email({
       minDomainSegments: 2,
@@ -12,7 +12,7 @@ const schemaCreateUser = Joi.object({
     .optional(),
   password: Joi.string().required(),
   token: Joi.string(),
-  subscription: Joi.string().required(),
+  subscription: Joi.string(),
 });
 
 const schemaUpdateUser = Joi.object({
