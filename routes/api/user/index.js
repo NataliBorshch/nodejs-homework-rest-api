@@ -12,6 +12,11 @@ router.post("/signup", validationCreateUser, ctr.register);
 router.post("/login", validationUpdateUser, ctr.login);
 router.post("/logout", guard, validationUpdateUser, ctr.logout);
 router.get("/current", guard, ctr.current);
-router.patch("/subscription", guard, ctr.updateSubscription);
+router.patch(
+  "/subscription",
+  guard,
+  validationUpdateSubscription,
+  ctr.updateSubscription
+);
 
 module.exports = router;
