@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const { Sub } = require("../../../helpers/constants");
 
 const schemaCreateUser = Joi.object({
   name: Joi.string().min(2).max(40).required(),
@@ -29,7 +30,9 @@ const schemaUpdateUser = Joi.object({
 }).min(1);
 
 const schemaUpdateSubscription = Joi.object({
-  subscription: Joi.string().required,
+  subscription: Joi.string()
+    .valid(Sub.PRO, Sub.STARTER, Sub.BISINESS)
+    .insensitive(),
 }).or("subscription");
 
 const validate = async (schema, obj, next) => {
