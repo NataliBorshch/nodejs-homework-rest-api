@@ -16,7 +16,7 @@ const getAll = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { docs: contacts, ...rest } = await listContacts(userId, req.query);
-    res.json(
+    return res.json(
       createResponse(Status.SUCCESS, HttpCode.SUCCESS, {
         data: { contacts, ...rest },
       })
@@ -80,22 +80,17 @@ const remove = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const userId = req.user.id;
-    if (Object.keys(req.body).length !== 0) {
-      const contact = await updateContact(userId, req.params.id, req.body);
-      return contact
-        ? res.json(
-            createResponse(Status.SUCCESS, HttpCode.OK, { data: { contact } })
-          )
-        : res.json(
-            createResponse(Status.ERROR, HttpCode.ERROR, {
-              message: Message.NOT_FOUND,
-            })
-          );
+    const contact = await updateContact(req.user.id, req.params.id, req.body);
+    if (contact) {
+      return res
+        .status(HttpCode.OK)
+        .json(
+          createResponse(Status.SUCCESS, HttpCode.OK, { data: { contact } })
+        );
     }
-    return res.json(
-      createResponse(Status.BAD_REQYEST, HttpCode.BAD_REQYEST, {
-        message: Message.BAD_REQYEST,
+    return res.status(HttpCode.ERROR).json(
+      createResponse(Status.ERROR, HttpCode.ERROR, {
+        message: Message.NOT_FOUND,
       })
     );
   } catch (e) {
