@@ -3,7 +3,6 @@ require("dotenv").config();
 
 class EmailService {
   constructor(env, sender) {
-    console.log(sender);
     this.sender = sender;
     switch (env) {
       case "development":
@@ -11,7 +10,7 @@ class EmailService {
         break;
 
       case "production":
-        this.link = "link fro production";
+        this.link = "link from production";
         break;
       default:
         this.link = "http://localhost:3000";
@@ -53,8 +52,10 @@ class EmailService {
       subject: "Verify your account ",
       html: emailHTML,
     };
+
+    // console.log("msg :", msg);
     const result = await this.sender.send(msg);
-    console.log(result);
+    console.log("result:", result);
   }
 }
 
