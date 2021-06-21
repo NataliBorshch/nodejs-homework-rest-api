@@ -20,7 +20,5 @@ router.patch(
   ctr.updateSubscription
 );
 router.patch("/avatars", guard, upload.single("avatars"), ctr.avatars);
-router.get("/verify/token", ctr.verify);
-router.get("/verify", ctr.repeatVerify);
 
 module.exports = router;
